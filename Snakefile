@@ -1,10 +1,11 @@
-SAMPLES = ["SRR2584857_1"]
+SAMPLES = ["SRR2584857_1", "SRR2584403_1", "SRR2584404_1", "SRR2584405_1"]
 GENOME = ["ecoli-rel606"]
 
-rule make_vcf:
+rule all:
     input:
         expand("outputs/{sample}.x.{genome}.vcf",
                sample=SAMPLES, genome=GENOME)
+
 
 rule uncompress_genome:
     input: "{genome}.fa.gz"
@@ -57,3 +58,4 @@ rule call_variants:
         bcftools call -mv -Ob {output.pileup} -o {output.bcf}
         bcftools view {output.bcf} > {output.vcf}
     """
+
